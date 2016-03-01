@@ -47,7 +47,18 @@ namespace IdentityAdmin.Host
                 factory.Register(new Registration<ICollection<InMemoryClient>>(clients));
                 adminApp.UseIdentityAdmin(new IdentityAdminOptions
                 {
-                    Factory = factory
+                    Factory = factory,
+                    AdminSecurityConfiguration = new ExternalAdminSecurtityConfiguration()
+                    {
+                        //RequireSsl = false,
+                        AdminRoleName = "SSI\\Maroon Team",
+                        BearerAuthenticationType = Constants.BearerAuthenticationType,
+                        NameClaimType = "name",
+                        RoleClaimType = "role",
+                        ShowLoginButton = true,
+                        AuthorizationEndpoint = "http://ssiplatform:34476/identity/connect/authorize",
+                        Authority = "http://ssiplatform:34476/identity/"
+                    }
                 });
             });
         }

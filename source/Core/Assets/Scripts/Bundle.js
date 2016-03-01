@@ -320,7 +320,11 @@ return this.DIGESTINFOHEAD[e]+t},this.getPaddedDigestInfoHex=function(t,e,r){var
 
     function idAdmTokenManager(OidcTokenManager, oauthSettings, PathBase, $window, $rootScope) {
 
-        oauthSettings.response_type = "token";
+        if (!oauthSettings.response_type) {
+            oauthSettings.response_type = "token";
+        }
+        oauthSettings.redirect_uri = window.location.protocol + "//" + window.location.host + "/admin#/callback/";
+        oauthSettings.post_logout_redirect_uri = window.location.protocol + "//" + window.location.host + "/admin#/home";
 
         var mgr = new OidcTokenManager(oauthSettings);
 
@@ -1418,7 +1422,7 @@ return this.DIGESTINFOHEAD[e]+t},this.getPaddedDigestInfoHex=function(t,e,r){var
         idAdmTokenManager.processTokenCallbackAsync(hash).then(function() {
             $location.url("/");
         }, function (error) {
-            idAdmErrorService.error(error && error.message || error);
+            idAdmErrorService.show(error && error.message || error);
         });
     }
     CallbackCtrl.$inject = ["idAdmTokenManager", "$location", "$rootScope", "$routeParams", "idAdmErrorService"];

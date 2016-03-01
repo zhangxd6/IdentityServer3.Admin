@@ -107,7 +107,7 @@
         idAdmTokenManager.processTokenCallbackAsync(hash).then(function() {
             $location.url("/");
         }, function (error) {
-            idAdmErrorService.error(error && error.message || error);
+            idAdmErrorService.show(error && error.message || error);
         });
     }
     CallbackCtrl.$inject = ["idAdmTokenManager", "$location", "$rootScope", "$routeParams", "idAdmErrorService"];

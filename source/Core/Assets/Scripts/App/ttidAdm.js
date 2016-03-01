@@ -56,7 +56,11 @@
 
     function idAdmTokenManager(OidcTokenManager, oauthSettings, PathBase, $window, $rootScope) {
 
-        oauthSettings.response_type = "token";
+        if (!oauthSettings.response_type) {
+            oauthSettings.response_type = "token";
+        }
+        oauthSettings.redirect_uri = window.location.protocol + "//" + window.location.host + "/admin#/callback/";
+        oauthSettings.post_logout_redirect_uri = window.location.protocol + "//" + window.location.host + "/admin#/home";
 
         var mgr = new OidcTokenManager(oauthSettings);
 
